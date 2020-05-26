@@ -57,34 +57,34 @@ def getNews():
 	
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
-	# 傳送文字
-	if event.message.text == '傳送文字':
-		message =TextSendMessage( getNews())
-		line_bot_api.push_message(userID, message)
- 
-	# 傳送圖片
-	elif event.message.text == '傳送圖片':
-		message = ImageSendMessage(
+    # 傳送文字
+    if event.message.text == '傳送文字':
+        message = TextSendMessage(getNews())
+        line_bot_api.push_message(userID, message)
+
+    # 傳送圖片
+    elif event.message.text == '傳送圖片':
+        message = ImageSendMessage(
             original_content_url='https://imgur.com/QPJ8A1b',
             preview_image_url='https://imgur.com/QPJ8A1b'
         )
-		
-	# 傳送影片
+
+    # 傳送影片
     elif event.message.text == '傳送影片':
         message = VideoSendMessage(
             original_content_url='https://i.imgur.com/hOKAE06.mp4',
             preview_image_url='https://i.imgur.com/hOKAE06.mp4'
         )
-		
-	# 傳送貼圖
-	elif event.message.text == '傳送貼圖':
-		message = StickerSendMessage(
+
+    # 傳送貼圖
+    elif event.message.text == '傳送貼圖':
+        message = StickerSendMessage(
             package_id='1',
             sticker_id='1'
         )
-	
-		
-	# 傳送多重圖片訊息
+
+
+    # 傳送多重圖片訊息
     elif event.message.text == '多項傳送':
         message = TemplateSendMessage(
             alt_text='ImageCarousel template',
@@ -109,7 +109,7 @@ def handle_message(event):
                 ]
             )
         )
-	# 傳送位置
+    # 傳送位置
     elif event.message.text == '傳送位置':
         message = LocationSendMessage(
             title='消息地點',
@@ -117,8 +117,8 @@ def handle_message(event):
             latitude=24.984210,
             longitude=121.293203
         )
-	
-	# 傳送按鈕介面訊息
+
+    # 傳送按鈕介面訊息
     elif event.message.text == '快速選單':
         message = TemplateSendMessage(
             alt_text='Buttons template',
@@ -142,8 +142,8 @@ def handle_message(event):
                 ]
             )
         )
-		
-	# 傳送組圖訊息
+
+    # 傳送組圖訊息
     elif event.message.text == '我要看報紙':
         message = ImagemapSendMessage(
             base_url='https://i.imgur.com/PjvwT6d.png',
@@ -182,8 +182,8 @@ def handle_message(event):
                 ]
             )
         )
-		
-	# 傳送多重按鈕介面訊息
+
+    # 傳送多重按鈕介面訊息
     elif event.message.text == '所有功能':
         message = TemplateSendMessage(
             alt_text='Carousel template',
@@ -230,9 +230,10 @@ def handle_message(event):
                 ]
             )
         )
-	else:
+    else:
         message = TextSendMessage(text=event.message.text)
-    line_bot_api.reply_message(event.reply_token,message)
+    line_bot_api.reply_message(event.reply_token, message)
+
 	
 if __name__ == '__main__':
     app.run(debug=True)
