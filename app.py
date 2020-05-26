@@ -72,12 +72,6 @@ def handle_message(event):
             preview_image_url='https://i.imgur.com/QPJ8A1b.png'
         )
 
-    # 傳送影片
-    elif event.message.text == '傳送影片':
-        message = VideoSendMessage(
-            original_content_url='https://i.imgur.com/hOKAE06.mp4',
-            preview_image_url='https://i.imgur.com/hOKAE06.mp4'
-        )
 
     # 傳送貼圖
     elif event.message.text == '傳送貼圖':
@@ -149,7 +143,7 @@ def handle_message(event):
     # 傳送組圖訊息
     elif event.message.text == '我要看報紙':
         message = ImagemapSendMessage(
-            base_url='https://i.imgur.com/mLZTo24',
+            base_url='https://i.imgur.com/QPJ8A1b.png',
             alt_text='Imagemap',
             base_size=BaseSize(height=1040, width=1040),
             actions=[
