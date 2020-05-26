@@ -64,13 +64,12 @@ def handle_message(event):
     # 傳送文字
     if event.message.text == '傳送文字':
         message = TextSendMessage(getNews())
-        line_bot_api.push_message(userID, message)
 
     # 傳送圖片
     elif event.message.text == '傳送圖片':
         message = ImageSendMessage(
-            original_content_url='https://imgur.com/QPJ8A1b',
-            preview_image_url='https://imgur.com/QPJ8A1b'
+            original_content_url='https://i.imgur.com/QPJ8A1b.png',
+            preview_image_url='https://i.imgur.com/QPJ8A1b.png'
         )
 
     # 傳送影片
@@ -133,14 +132,14 @@ def handle_message(event):
                 actions=[
                     MessageTemplateAction(
                         label='發生地點',
-                        text='我要看發生地點'
+                        text='傳送位置'
                     ),
                     MessageTemplateAction(
-                        label='文字雲週報',
-                        text='我要看文字雲週報'
+                        label='看新聞',
+                        text='傳送文字'
                     ),
                     URITemplateAction(
-                        label='Uri',
+                        label='URL',
                         uri='https://tw.appledaily.com/local/realtime/20180817/1412804'
                     )
                 ]
@@ -150,7 +149,7 @@ def handle_message(event):
     # 傳送組圖訊息
     elif event.message.text == '我要看報紙':
         message = ImagemapSendMessage(
-            base_url='https://i.imgur.com/PjvwT6d.png',
+            base_url='https://i.imgur.com/mLZTo24',
             alt_text='Imagemap',
             base_size=BaseSize(height=1040, width=1040),
             actions=[
@@ -200,16 +199,16 @@ def handle_message(event):
                         actions=[
                             MessageTemplateAction(
                                 label='發生地點',
-                                text='我要看發生地點'
+                                text='傳送位置'
                             ),
                             MessageTemplateAction(
-                                label='文字雲週報',
-                                text='我要看文字雲週報'
+                                label='看新聞',
+                                text='傳送文字'
                             ),
-                            URITemplateAction(
-                                label='Uri',
-                                uri='https://tw.appledaily.com/local/realtime/20180817/1412804'
-                            )
+							URITemplateAction(
+								label='URL',
+								uri='https://tw.appledaily.com/local/realtime/20180817/1412804'
+							)
                         ]
                     ),
                     CarouselColumn(
@@ -223,11 +222,11 @@ def handle_message(event):
                             ),
                             MessageTemplateAction(
                                 label='更多新聞',
-                                text='我要看報紙'
+                                text='傳送文字'
                             ),
                             MessageTemplateAction(
                                 label='放鬆一下',
-                                text='給我一個貼圖'
+                                text='傳送貼圖'
                             )
                         ]
                     )
