@@ -25,7 +25,7 @@ def get_time():
 	now_time = datetime.now().strftime('%Y-%m-%d %H:%M')
 	return now_time
 	
-message = TextSendMessage( getNews())
+message = TextSendMessage( get_time())
 line_bot_api.push_message(userID, message)
 
 
