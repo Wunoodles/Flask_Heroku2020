@@ -45,14 +45,14 @@ def get_mask_info(name):
 	
 	person_dict = json.loads(response)
 	for info in person_dict['features']:
-		name = info['properties']['name']
+		store_name = info['properties']['name']
 		address = info['properties']['address']
 		audlt = info['properties']['mask_adult']
 		mask_child = info['properties']['mask_child']
 		
 		geo = info['geometry']['coordinates']
     
-		if name == '德興藥局':
+		if store_name == name:
 			return [address, audlt, mask_child, geo]
 
 	return ['查無此店']
@@ -63,7 +63,7 @@ def handle_message(event):
     if event.message.text == '傳送文字':
         message = TextSendMessage(getNews())
 		
-	elif event.message.text.startswith('貼圖'):
+    elif event.message.text.startswith('貼圖'):
         text = event.message.text
         _, package_id, sticker_id = text.split('-')
         message = StickerSendMessage(
@@ -71,20 +71,20 @@ def handle_message(event):
             sticker_id=int(sticker_id)
         )
 	
-	elif event.message.text.startswith('口罩查詢-'):
+    elif event.message.text.startswith('口罩查詢-'):
         text = event.message.text
         _, name = text.split('-')
         result = get_mask_info(name)
-		if len(result) == 1:
-			message = TextSendMessage(result)
-		else:
-			message = [
-			LocationSendMessage(
+        if len(result) == 1:
+            message = TextSendMessage(result)
+        else:
+            message = [
+            LocationSendMessage(
 				title=name,
 				address=result[0],
 				latitude=result[3][0],
 				longitude=result[3][1]
-			),TextSendMessage(result[1])]
+            ),TextSendMessage(result[1])]
     
     else:
         message = TextSendMessage(text=event.message.text)
