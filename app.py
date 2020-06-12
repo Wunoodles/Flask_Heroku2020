@@ -42,6 +42,7 @@ def callback():
 from bs4 import BeautifulSoup
 import requests
 def movie(num):
+    num = int(num)
     target_url = 'http://www.atmovies.com.tw/movie/next/0/'
     print('Start parsing movie ...')
     rs = requests.session()
@@ -50,7 +51,7 @@ def movie(num):
     soup = BeautifulSoup(res.text, 'html.parser')
     content = []
     for index, data in enumerate(soup.select('ul.filmListAll a')):
-        if index == int(num):
+        if index == num:
             break
         title = data.text.replace('\t', '').replace('\r', '')
         link = "http://www.atmovies.com.tw" + data['href']
