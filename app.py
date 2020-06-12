@@ -16,6 +16,7 @@ line_bot_api = LineBotApi('73dYdWd9LTZ+z/nMDvbZVHIeHJKkhTQW8oFK1mUaHw8pgOclBx3Ep
 # Channel secret 
 handler = WebhookHandler('0e4384641b9c12109bcf4ebcb0e146b0')
 
+
 @app.route('/')
 def hello_world():
     return 'Hello, World! '
@@ -38,52 +39,51 @@ def callback():
 
     return 'OK'
 
+from bs4 import BeautifulSoup
 import requests
-import json
-def get_mask_info(name):
-    r = requests.get('https://raw.githubusercontent.com/kiang/pharmacies/master/json/points.json')
-    response = r.text
+def movie(num):
+    target_url = 'http://www.atmovies.com.tw/movie/next/0/'
+    print('Start parsing movie ...')
+    rs = requests.session()
+    res = rs.get(target_url, verify=False)
+    res.encoding = 'utf-8'
+    soup = BeautifulSoup(res.text, 'html.parser')
+    content = []
+    for index, data in enumerate(soup.select('ul.filmListAll a')):
+        if index == int(num):
+            break
+        title = data.text.replace('\t', '').replace('\r', '')
+        link = "http://www.atmovies.com.tw" + data['href']
+        content += [[title, link]]
+    return content
 
-    person_dict = json.loads(response)
-    for info in person_dict['features']:
-        store_name = info['properties']['name']
-        address = info['properties']['address']
-        audlt = info['properties']['mask_adult']
-        mask_child = info['properties']['mask_child']
-
-        geo = info['geometry']['coordinates']
-
-        if store_name == name:
-            return [address, audlt, mask_child, geo]
-
-    return ['查無此店']
 
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
         
-    if event.message.text == '傳送位置':
-        message = LocationSendMessage(
-            title='消息地點',
-            address='花蓮縣玉里鎮國武里中山路２段５８號',
-            latitude=23.333096,
-            longitude=121.315149,
+    if event.message.text.startswith('電影-'):
+        _, num = event.message.text.split('-')
+        movie_info = movie(num)
+        columns_info = []
+        for m in movie_info:
+            columns_info += [
+                CarouselColumn(
+                    thumbnail_image_url='https://i.imgur.com/gallery/PddQoYt',
+                    title=m[0],
+                    text=m[0],
+                    actions=[
+                        URITemplateAction(
+                            label='前往觀看',
+                            uri=m[1]
+                        )
+                    ]
+                )
+            ]
+        Carousel_template = TemplateSendMessage(
+            alt_text='新聞文章',
+            template=CarouselTemplate(columns= columns_info)
         )
 
-    elif event.message.text.startswith('口罩查詢-'):
-        text = event.message.text
-        _, name = text.split('-')
-        result = get_mask_info(name)
-
-        if len(result) == 1:
-            message = TextSendMessage(result[0])
-        else:
-            title = "{},大人:{},小孩:{}".format(name, result[1], result[2])
-            message = LocationSendMessage(
-                title=title,
-                address=result[0],
-                latitude=float(result[3][1]),
-                longitude=float(result[3][0])
-            )
     else:
         message = TextSendMessage(text=event.message.text)
     line_bot_api.reply_message(event.reply_token, message)
