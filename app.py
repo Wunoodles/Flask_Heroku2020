@@ -67,12 +67,21 @@ def handle_message(event):
             package_id=int(package_id),
             sticker_id=int(sticker_id)
         )
+        
+    elif event.message.text == '傳送位置':
+        message = LocationSendMessage(
+            title='消息地點',
+            address='桃園',
+            latitude=24.984210,
+            longitude=121.293203
+        )
 
     elif event.message.text.startswith('口罩查詢-'):
         text = event.message.text
         _, name = text.split('-')
         result = get_mask_info(name)
         print(result)
+        print(len(result))
         if len(result) == 1:
             message = TextSendMessage(result)
         else:
@@ -82,6 +91,7 @@ def handle_message(event):
                 latitude=result[3][0],
                 longitude=result[3][1]
             )
+            line_bot_api.reply_message(event.reply_token, message)
     
     else:
         message = TextSendMessage(text=event.message.text)
