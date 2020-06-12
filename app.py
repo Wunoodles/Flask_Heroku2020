@@ -83,8 +83,9 @@ def handle_message(event):
         print(result)
         print(len(result))
         if len(result) == 1:
-            message = TextSendMessage(result)
+            message = TextSendMessage(result[0])
         else:
+            print(result[0], float(result[3][0]), float(result[3][1]))
             message = LocationSendMessage(
                 title=name,
                 address=result[0],
