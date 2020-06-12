@@ -54,6 +54,9 @@ def movie(num):
             break
         title = data.text.replace('\t', '').replace('\r', '')
         link = "http://www.atmovies.com.tw" + data['href']
+        if len(title) == 0:
+            num += 1
+            continue
         content += [[title, link]]
     return content
 
