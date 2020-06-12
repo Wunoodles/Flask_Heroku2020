@@ -60,8 +60,16 @@ def movie(num):
 
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
+    print(event)
+    if event.message.text == '傳送位置':
+        message = LocationSendMessage(
+            title='消息地點',
+            address='花蓮縣玉里鎮國武里中山路２段５８號',
+            latitude=23.333096,
+            longitude=121.315149,
+        )
         
-    if event.message.text.startswith('電影-'):
+    elif event.message.text.startswith('電影-'):
         _, num = event.message.text.split('-')
         print(num)
         movie_info = movie(num)
