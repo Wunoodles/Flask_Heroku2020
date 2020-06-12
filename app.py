@@ -88,8 +88,8 @@ def handle_message(event):
             message = LocationSendMessage(
                 title=name,
                 address=result[0],
-                latitude=result[3][0],
-                longitude=result[3][1]
+                latitude=float(result[3][0]),
+                longitude=float(result[3][1])
             )
             line_bot_api.reply_message(event.reply_token, message)
     
