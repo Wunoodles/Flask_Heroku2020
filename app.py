@@ -79,7 +79,7 @@ def handle_message(event):
         else:
             title = "{},大人:{},小孩:{}".format(name, result[1], result[2])
             message = LocationSendMessage(
-                title=name,
+                title=title,
                 address=result[0],
                 latitude=float(result[3][1]),
                 longitude=float(result[3][0])
