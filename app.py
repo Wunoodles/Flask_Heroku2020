@@ -69,7 +69,7 @@ def handle_message(event):
             longitude=121.315149,
         )
     elif event.message.text == '範例':
-        tmp = CarouselColumn(
+        tmp = [CarouselColumn(
                         thumbnail_image_url='https://example.com/item1.jpg',
                         title='this is menu1',
                         text='description1',
@@ -108,14 +108,12 @@ def handle_message(event):
                                 uri='http://example.com/2'
                             )
                         ]
-                    )
+                    )]
         print(tmp)
         message = TemplateSendMessage(
             alt_text='Carousel template',
             template=CarouselTemplate(
-                columns=[
-                    tmp
-                ]
+                columns=tmp
             )
         )
 
