@@ -76,8 +76,7 @@ def handle_message(event):
         print(movie_info)
         columns_info = []
         for m in movie_info:
-            columns_info += [[
-                CarouselColumn(
+            colum = CarouselColumn(
                     thumbnail_image_url='https://example.com/item1.jpg',
                     title=m[0],
                     text=m[0],
@@ -88,7 +87,7 @@ def handle_message(event):
                         )
                     ]
                 )
-            ]]
+            columns_info += [colum]
         print(columns_info)        
         message = TemplateSendMessage(
             alt_text='新聞文章',
