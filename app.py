@@ -72,16 +72,16 @@ def handle_message(event):
         text = event.message.text
         _, name = text.split('-')
         result = get_mask_info(name)
+        print(result)
         if len(result) == 1:
             message = TextSendMessage(result)
         else:
-            message = [
-            LocationSendMessage(
+            message = LocationSendMessage(
                 title=name,
                 address=result[0],
                 latitude=result[3][0],
                 longitude=result[3][1]
-            ),TextSendMessage(result[1])]
+            )
     
     else:
         message = TextSendMessage(text=event.message.text)
