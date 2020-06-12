@@ -63,7 +63,9 @@ def handle_message(event):
         
     if event.message.text.startswith('電影-'):
         _, num = event.message.text.split('-')
+        print(num)
         movie_info = movie(num)
+        print(movie_info)
         columns_info = []
         for m in movie_info:
             columns_info += [
