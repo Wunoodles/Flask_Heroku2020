@@ -89,7 +89,7 @@ def handle_message(event):
                     ]
                 )
             ]
-        Carousel_template = TemplateSendMessage(
+        message = TemplateSendMessage(
             alt_text='新聞文章',
             template=CarouselTemplate(columns= columns_info)
         )
