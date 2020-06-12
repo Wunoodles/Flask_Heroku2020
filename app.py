@@ -60,13 +60,6 @@ def get_mask_info(name):
 
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
-    if event.message.text.startswith('貼圖'):
-        text = event.message.text
-        _, package_id, sticker_id = text.split('-')
-        message = StickerSendMessage(
-            package_id=int(package_id),
-            sticker_id=int(sticker_id)
-        )
         
     elif event.message.text == '傳送位置':
         message = LocationSendMessage(
@@ -80,19 +73,17 @@ def handle_message(event):
         text = event.message.text
         _, name = text.split('-')
         result = get_mask_info(name)
-        print(result)
-        print(len(result))
+
         if len(result) == 1:
             message = TextSendMessage(result[0])
         else:
-            print(result[0], float(result[3][0]), float(result[3][1]))
+            title = "{},大人:{},小孩:{}".format(name, result[1], result[2])
             message = LocationSendMessage(
                 title=name,
                 address=result[0],
                 latitude=float(result[3][1]),
                 longitude=float(result[3][0])
             )
-    
     else:
         message = TextSendMessage(text=event.message.text)
     line_bot_api.reply_message(event.reply_token, message)
