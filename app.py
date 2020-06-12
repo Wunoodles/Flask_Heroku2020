@@ -71,9 +71,9 @@ def handle_message(event):
     elif event.message.text == '傳送位置':
         message = LocationSendMessage(
             title='消息地點',
-            address='桃園',
-            latitude=24.984210,
-            longitude=121.293203
+            address='花蓮縣玉里鎮國武里中山路２段５８號',
+            latitude=23.333096,
+            longitude=121.315149,
         )
 
     elif event.message.text.startswith('口罩查詢-'):
@@ -89,10 +89,9 @@ def handle_message(event):
             message = LocationSendMessage(
                 title=name,
                 address=result[0],
-                latitude=float(result[3][0]),
-                longitude=float(result[3][1])
+                latitude=float(result[3][1]),
+                longitude=float(result[3][0])
             )
-            line_bot_api.reply_message(event.reply_token, message)
     
     else:
         message = TextSendMessage(text=event.message.text)
