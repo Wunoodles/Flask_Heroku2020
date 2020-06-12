@@ -1,1 +1,1 @@
-clock: python scheduleT.py
+web: gunicorn mask_app:app
